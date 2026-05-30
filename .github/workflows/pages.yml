@@ -31,6 +31,7 @@ jobs:
           cp index.html topics.html styles.css _site/
           cp .nojekyll _site/
           cp -R articles _site/articles
+          cp -R ja _site/ja
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
