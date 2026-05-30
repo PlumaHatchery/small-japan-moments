@@ -41,6 +41,7 @@ fi
 
 rsync -a --delete \
   --exclude '.git' \
+  --exclude '.github' \
   --exclude 'scripts' \
   --exclude 'README.md' \
   "$ROOT"/ "$PUBLISH_DIR"/
