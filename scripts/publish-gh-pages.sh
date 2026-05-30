@@ -46,6 +46,8 @@ rsync -a --delete \
   --exclude 'README.md' \
   "$ROOT"/ "$PUBLISH_DIR"/
 
+rm -rf "$PUBLISH_DIR/.github"
+
 git -C "$PUBLISH_DIR" diff --check
 
 git -C "$PUBLISH_DIR" add -A
