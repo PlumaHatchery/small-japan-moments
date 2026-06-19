@@ -13,6 +13,7 @@ This site is adjacent to Madobe: it should attract Japan-interested readers firs
 ## Initial structure
 
 - `index.html` — top page and app bridge
+- `madobe.html` — soft Madobe introduction / conversion bridge
 - `articles/` — lightweight evergreen articles
 - `topics.html` — content pillars and future article directions
 - `styles.css` — shared styling
@@ -20,3 +21,8 @@ This site is adjacent to Madobe: it should attract Japan-interested readers firs
 ## Publishing
 
 Designed to work as plain static files on GitHub Pages.
+
+
+## Operating note
+
+For Madobe growth work, this repository is the public-facing content surface. `~/projects/madobe-marketing/` should be treated as the private planning workspace; reader-facing copy and conversion improvements belong here first.
