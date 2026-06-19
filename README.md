@@ -17,6 +17,7 @@ This site is adjacent to Madobe: it should attract Japan-interested readers firs
 - `articles/` — lightweight evergreen articles
 - `topics.html` — content pillars and future article directions
 - `styles.css` — shared styling
+- `assets/madobe/` — lightweight Madobe screenshots used by the public site
 
 ## Publishing
 
