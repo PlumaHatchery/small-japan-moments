@@ -28,7 +28,7 @@ jobs:
       - name: Prepare static files
         run: |
           mkdir -p _site
-          cp index.html topics.html styles.css _site/
+          cp index.html topics.html madobe.html styles.css _site/
           cp .nojekyll _site/
           cp -R articles _site/articles
           cp -R ja _site/ja
