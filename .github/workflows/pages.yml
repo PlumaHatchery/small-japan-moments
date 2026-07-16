@@ -1,30 +1,31 @@
-name: Deploy static site to GitHub Pages
+name: Validate static site
 
 on:
   push:
+    branches: [main]
+  pull_request:
     branches: [main]
   workflow_dispatch:
 
 permissions:
   contents: read
-  pages: write
-  id-token: write
-
-concurrency:
-  group: pages
-  cancel-in-progress: false
 
 jobs:
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+  validate:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Setup Pages
-        uses: actions/configure-pages@v5
+      - name: Check required publish files
+        run: |
+          test -f index.html
+          test -f topics.html
+          test -f madobe.html
+          test -f styles.css
+          test -f .nojekyll
+          test -d articles
+          test -d assets
+          test -d ja
       - name: Prepare static files
         run: |
           mkdir -p _site
@@ -33,10 +34,8 @@ jobs:
           cp -R articles _site/articles
           cp -R assets _site/assets
           cp -R ja _site/ja
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: _site
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+      - name: Check generated site
+        run: |
+          find _site -type f | sort
+          test -f _site/index.html
+          test -f _site/ja/index.html
