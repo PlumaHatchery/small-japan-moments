@@ -350,6 +350,12 @@ h3 {
   margin-top: 0;
 }
 
+.section-note {
+  margin: 0 0 18px;
+  color: var(--muted);
+  line-height: 1.65;
+}
+
 .chooser-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
