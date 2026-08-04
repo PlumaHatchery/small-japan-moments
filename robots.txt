@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://plumahatchery.github.io/small-japan-moments/sitemap.xml
