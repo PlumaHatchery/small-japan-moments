@@ -3,6 +3,7 @@ set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 PUBLISH_DIR="${PUBLISH_DIR:-/tmp/small-japan-moments-gh-pages}"
+PUBLIC_BASE_URL="${PUBLIC_BASE_URL:-https://plumahatchery.github.io/small-japan-moments/}"
 
 cd "$ROOT"
 
@@ -47,3 +48,31 @@ else
   echo "ERROR: gh-pages is behind main publishable files. Run ./scripts/publish-gh-pages.sh" >&2
   exit 1
 fi
+
+if [ "${SKIP_PUBLIC_URL_CHECK:-}" = "1" ]; then
+  echo "SKIP: public URL check disabled by SKIP_PUBLIC_URL_CHECK=1."
+  exit 0
+fi
+
+echo "Checking public GitHub Pages URLs..."
+
+mapfile -t public_urls < <(
+  {
+    printf '%s\n' "$PUBLIC_BASE_URL"
+    printf '%s\n' "${PUBLIC_BASE_URL%/}/sitemap.xml"
+    if [ -f "$ROOT/sitemap.xml" ]; then
+      grep -Eo '<loc>https?://[^<]+' "$ROOT/sitemap.xml" | sed 's#<loc>##' | head -n 5
+    fi
+  } | awk '!seen[$0]++'
+)
+
+for url in "${public_urls[@]}"; do
+  status="$(curl -L -sS -o /dev/null -w '%{http_code}' --max-time 20 "$url")"
+  if [ "$status" != "200" ]; then
+    echo "ERROR: public URL is not reachable with HTTP 200: $url ($status)" >&2
+    exit 1
+  fi
+  echo "OK: $url"
+done
+
+echo "OK: public GitHub Pages URLs are reachable."
